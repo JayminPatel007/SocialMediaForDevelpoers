@@ -187,6 +187,77 @@ router.put("/unlike/:post_id", auth, async(req, res)=>{
             }]
         })
     }
+});
+
+// @route    PUT api/posts/comment/:post_id
+// @desc     Comment to Post
+// @access   Private
+router.put("/comment/:post_id", auth, async(req, res)=>{
+    try {
+        const post = await Post.findById(req.params.post_id);
+        const user = await User.findById(req.user.id)
+        if(!post){
+            return res.status(404).json({
+                errors: [{
+                    msg: "Post not found"
+                }]
+            })
+        }
+        const newComment = {
+            text: req.body.text,
+            name: user.name,
+            avatar: user.avatar,
+            user: req.user.id
+        };
+        post.comments.unshift(newComment)
+        await post.save()
+        res.json(post.comments)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({
+            errors: [{
+                msg: "Server Error!"
+            }]
+        })
+    }
+});
+
+// @route    DELETE api/posts/comment/:post_id/:comment_id
+// @desc     DELETE a comment on a post
+// @access   Private
+router.delete("/comment/:post_id/:comment_id", auth, async(req, res)=>{
+    try {
+        const post = await Post.findById(req.params.post_id);
+        if(!post){
+            return res.status(404).json({
+                errors: [{
+                    msg: "Post not found"
+                }]
+            })
+        }
+
+        const comment = post.comments.find(comment=> comment.id === req.params.comment_id);
+        if(!comment){
+            return res.status(404).json({msg: "Cpmment does not exist"})
+        }
+
+        if(comment.user.toString() !== req.user.id){
+            return res.status(401).json({msg: "User is not Authorized!"});
+        }
+
+        const removeIndex = post.comments.map(comment=> comment._id.toString()).indexOf(req.params.comment_id);
+        post.comments.splice(removeIndex, 1);
+        await post.save()
+        res.json(post.comments)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({
+            errors: [{
+                msg: "Server Error!"
+            }]
+        })
+    }
 })
+
 
 module.exports = router;

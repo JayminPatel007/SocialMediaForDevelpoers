@@ -17,7 +17,7 @@ const PostSchema = mongoose.Schema({
             ref: 'user'
         }
     }],
-    commnets:[{
+    comments:[{
         user:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'user'
