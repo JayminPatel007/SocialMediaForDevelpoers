@@ -16,22 +16,12 @@ router.get("/me", auth , async (req, res)=>{
     try{
         const profile = await Profile.findOne({user: req.user.id}).populate('user', ['name', 'avatar']);
         if(!profile){
-            return res.status(400).json({
-                errors: [{
-                    msg: "There is no profile for this user"
-                }]
-            })
+            return res.status(404).send("There is no profile for this User")
         }
         res.status(200).json(profile)
     }catch(err){
         console.error(err.message);
-        res.status(500).json({
-            errors: [
-                {
-                    msg: "Server Error"
-                }
-            ]
-        })
+        res.status(500).send("Server Error")
     }
 });
 
@@ -110,11 +100,7 @@ router.get("/", async (req, res)=>{
         res.json(profiles);
     } catch (err) {
         console.error(err.message)
-        res.status(500).json({
-            errors: [{
-                msg: "Server Error"
-            }]
-        });
+        res.status(500).send("Server Error")
     }
 });
 
@@ -125,11 +111,7 @@ router.get("/user/:user_id", async (req, res)=>{
     try {
         const profile= await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar']);
         if (!profile){
-            return res.status(400).json({ 
-                errors: [{
-                    msg: "Profile not Found"
-                }]
-            })
+            return res.status(404).send("Profile not Found")
         }
         console.log(req.params.user_id)
         res.json(profile);
@@ -137,17 +119,9 @@ router.get("/user/:user_id", async (req, res)=>{
     } catch (err) {
         console.error(err.message)
         if(err.kind == 'ObjectId'){
-            return res.status(400).json({ 
-                errors: [{
-                    msg: "Profile not Found"
-                }]
-            })
+            return res.status(404).send("Profile not Found")
         }
-        res.status(500).json({
-            errors: [{
-                msg: "Server Error"
-            }]
-        });
+        res.status(500).send("Server Error")
     }
 });
 
