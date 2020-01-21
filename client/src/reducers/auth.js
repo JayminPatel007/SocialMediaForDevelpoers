@@ -32,7 +32,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 ...payload,
-                isAuthenticated: true,
                 loading: true
             }
         case LOGOUT:
