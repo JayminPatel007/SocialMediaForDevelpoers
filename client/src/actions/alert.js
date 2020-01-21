@@ -8,6 +8,7 @@ export const setAlert = (msg, alertType, timeout=5000) => dispatch => {
         type: SET_ALERT,
         payload: { msg, alertType, id}
     });
+    document.documentElement.scrollTop = 0;
     setTimeout(()=> dispatch({
         type: REMOVE_ALERT,
         payload: id
