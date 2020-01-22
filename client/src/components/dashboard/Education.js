@@ -4,16 +4,16 @@ import Moment from 'react-moment'
 import {connect} from 'react-redux';
 
 const Education = ({education}) => {
-const educations = experience.map(exp=> (
-    <tr key={exp._id}>
-        <td>{exp.company}</td>
-        <td className="hide-sm">{exp.title}</td>
+const educations = education.map(edu=> (
+    <tr key={edu._id}>
+        <td>{edu.school}</td>
+        <td className="hide-sm">{edu.degree}</td>
         <td className="hide-sm">
-        <Moment format='YYYY/MM/DD'>{exp.from}</Moment>{' '}
-        {exp.to === null ? (
+        <Moment format='YYYY/MM/DD'>{edu.from}</Moment>{' '}
+        {edu.to === null ? (
             'Now'
         ): (
-        <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+        <Moment format="YYYY/MM/DD">{edu.to}</Moment>
         )}
         </td>
         <td>
@@ -24,24 +24,28 @@ const educations = experience.map(exp=> (
 
     return (
         <div>
-           <h2 className="my-2">Experience Credentials</h2>
+            { education.length > 0 && 
+            <Fragment>
+           <h2 className="my-2">Education Credentials</h2>
            <table className="table">
                <thead>
                    <tr>
-                       <th>Company</th>
-                       <th className="hide-sm">Title</th>
+                       <th>School/Bootcamp</th>
+                       <th className="hide-sm">Degree</th>
                        <th className="hide-sm">Years</th>
                        <th></th>
                    </tr>
                </thead>
-                <tbody>{experiences}</tbody>
+                <tbody>{educations}</tbody>
             </table> 
+            </Fragment>
+        }
         </div>
     )
 }
 
-Experience.propTypes = {
+Education.propTypes = {
     experience: PropTypes.array.isRequired,
 }
 
-export default Experience
+export default Education

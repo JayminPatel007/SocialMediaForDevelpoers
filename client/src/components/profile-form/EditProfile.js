@@ -69,7 +69,7 @@ const EditProfile = ({profile: {profile, loading},createProfile,getCurrentProfil
     return (
     <Fragment>
         <h1 className="large text-primary">
-        Create Your Profile
+        Edit Your Profile
       </h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
@@ -170,7 +170,7 @@ const EditProfile = ({profile: {profile, loading},createProfile,getCurrentProfil
         </Fragment>}
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
-        </form>>
+        </form>
     </Fragment>
 
     )
