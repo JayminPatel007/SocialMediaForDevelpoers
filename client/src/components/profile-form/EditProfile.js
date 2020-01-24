@@ -62,6 +62,7 @@ const EditProfile = ({profile: {profile, loading},createProfile,getCurrentProfil
 
     const onSubmit = e => {
       e.preventDefault();
+      console.log(formData)
       createProfile(formData, history, true);
       document.documentElement.scrollTop = 0;
     }

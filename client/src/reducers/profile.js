@@ -28,6 +28,7 @@ export default function(state= initialState, action){
                 error: null
             };
         case GET_PROFILES:
+            console.log(payload);
             return {
                 ...state,
                 profiles: payload,
